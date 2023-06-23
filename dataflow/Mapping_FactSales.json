@@ -1,0 +1,77 @@
+{
+	"name": "Mapping_FactSales",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SalesOrderDetail",
+						"type": "DatasetReference"
+					},
+					"name": "SQLSERVERSalesOrderDetail"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SynapseFactSales",
+						"type": "DatasetReference"
+					},
+					"name": "SynapseFactSales",
+					"rejectedDataLinkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          ProductID as integer,",
+				"          SalesOrderID as integer,",
+				"          OrderQty as short,",
+				"          UnitPrice as decimal(19,4),",
+				"          OrderDate as timestamp,",
+				"          CustomerID as integer,",
+				"          TaxAmt as decimal(19,4)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT dt.[ProductID],dt.[SalesOrderID],dt.[OrderQty],dt.[UnitPrice],hd.[OrderDate],hd.[CustomerID],hd.[TaxAmt]\\n  FROM [SalesLT].[SalesOrderDetail] dt\\n  LEFT JOIN [SalesLT].[SalesOrderHeader] hd\\n  ON dt.[SalesOrderID]=hd.[SalesOrderID]',",
+				"     format: 'query') ~> SQLSERVERSalesOrderDetail",
+				"SQLSERVERSalesOrderDetail sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          ProductID as integer,",
+				"          SalesOrderID as integer,",
+				"          CustomerID as integer,",
+				"          OrderQty as integer,",
+				"          UnitPrice as decimal(19,4),",
+				"          OrderDate as timestamp,",
+				"          TaxAmt as decimal(19,4)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          ProductID,",
+				"          SalesOrderID,",
+				"          CustomerID,",
+				"          OrderQty,",
+				"          UnitPrice,",
+				"          OrderDate,",
+				"          TaxAmt",
+				"     )) ~> SynapseFactSales"
+			]
+		}
+	}
+}

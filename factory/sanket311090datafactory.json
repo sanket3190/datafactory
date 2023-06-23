@@ -1,0 +1,9 @@
+{
+	"name": "sanket311090datafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "24f7e490-3887-4162-a306-37a56140ca46",
+		"tenantId": "cec8a5c8-fb3f-476b-a49c-ca77f9abfdd6"
+	}
+}

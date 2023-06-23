@@ -1,0 +1,17 @@
+{
+	"name": "DestinationDataset_ges",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Synapse",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Logcsv"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
