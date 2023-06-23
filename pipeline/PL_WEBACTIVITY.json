@@ -1,0 +1,25 @@
+{
+	"name": "PL_WEBACTIVITY",
+	"properties": {
+		"activities": [
+			{
+				"name": "WebActivity",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 2,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://sanket311090.blob.core.windows.net/json/customer.json",
+					"method": "GET"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
